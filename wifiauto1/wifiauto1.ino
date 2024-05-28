@@ -2,28 +2,13 @@
 //
 // ATTENTION, ce code a été testé sur un esp32-c3. Pas testé sur les autres boards !
 //
-#define zVERSION  "zf240528.1850"
+#define zVERSION  "zf240528.1854"
 #define zHOST     "wifiauto1"            // ATTENTION, tout en minuscule !
-
-
-
-// il faut encore remplacer les variables et constantes par des directives du compilateur afin de gagner de la place en mémoire
-
-
-
-
-
-
-
-
-
 
 /*
 Utilisation:
 
 Astuce:
-
-
 
 Installation:
 
@@ -42,13 +27,8 @@ https://forum.fritzing.org/t/need-esp32-c3-super-mini-board-model/20561
 https://www.aliexpress.com/item/1005006005040320.html
 https://randomnerdtutorials.com/esp32-useful-wi-fi-functions-arduino
 https://dronebotworkshop.com/wifimanager/
-https://github.com/universam1/iSpindel/tree/master
-https://components101.com/sensors/mpu6050-module
-https://github.com/electroniccats/mpu6050
-https://github.com/ElectronicCats/mpu6050/blob/master/examples/MPU6050_raw/MPU6050_raw.ino
 https://lastminuteengineers.com/esp32-ota-web-updater-arduino-ide/
-https://github.com/dawidchyrzynski/arduino-home-assistant/blob/main/examples/sensor-integer/sensor-integer.ino
-https://chat.mistral.ai/    pour toute la partie API REST ᕗ
+https://chat.mistral.ai/    pour toute la partie wifiauto ᕗ
 */
 
 
@@ -65,14 +45,6 @@ const int buttonPin = 9;  // the number of the pushbutton pin
 float rrsiLevel = 0;      // variable to store the RRSI level
 
 int zDelay1Interval= 60000;        // Délais en mili secondes pour le zDelay1
-
-
-float sensorValue1 = 0;  // variable to store the value coming from the sensor 1
-float sensorValue2 = 0;  // variable to store the value coming from the sensor 2
-float sensorValue3 = 0;  // variable to store the value coming from the sensor 3
-float sensorValue4 = 0;  // variable to store the value coming from the sensor 4
-float sensorValue5 = 0;  // variable to store the value coming from the sensor 5
-#define TEMP_CELSIUS 0
 
 
 // Solar Pulse
@@ -95,30 +67,20 @@ void setup() {
   digitalWrite(ledPin, LOW); delay(zSonarPulseOn); digitalWrite(ledPin, HIGH); delay(zSonarPulseOff);
   delay(zSonarPulseWait);
 
-
-
   // start serial console
   USBSerial.begin(19200);
   USBSerial.setDebugOutput(true);       //pour voir les messages de debug des libs sur la console série !
   delay(3000);                          //le temps de passer sur la Serial Monitor ;-)
   USBSerial.println("\n\n\n\n**************************************\nCa commence !"); USBSerial.println(zHOST ", " zVERSION);
 
-
-
-
   // start WIFI
   zStartWifi();
-
 
   // start OTA server
   otaWebServer();
 
-
-
   // go go go
   USBSerial.println("\nC'est parti !\n");
-
-
 }
 
 
@@ -129,9 +91,6 @@ void loop() {
   // Délais non bloquant pour le sonarpulse et l'OTA
   zDelay1(zDelay1Interval);
 }
-
-
-
 
 
 // Délais non bloquant pour le sonarpulse et l'OTA
