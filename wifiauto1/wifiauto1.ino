@@ -2,7 +2,7 @@
 //
 // ATTENTION, ce code a été testé sur un esp32-c3. Pas testé sur les autres boards !
 //
-#define zVERSION  "zf240528.1854"
+#define zVERSION  "zf240528.2347"
 #define zHOST     "wifiauto1"            // ATTENTION, tout en minuscule !
 
 /*
@@ -42,12 +42,10 @@ https://chat.mistral.ai/    pour toute la partie wifiauto ᕗ
 // General
 const int ledPin = 8;    // the number of the LED pin
 const int buttonPin = 9;  // the number of the pushbutton pin
-float rrsiLevel = 0;      // variable to store the RRSI level
-
 int zDelay1Interval= 60000;        // Délais en mili secondes pour le zDelay1
 
 
-// Solar Pulse
+// Sonar Pulse
 #include "zSonarpulse.h"
 
 

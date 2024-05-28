@@ -1,4 +1,4 @@
-// zf240527.1850
+// zf240528.2347
 
 // Choix de la connexion WIFI, qu'une seule possibilité !
 // #define zWifiNormal true
@@ -12,6 +12,7 @@
 #include "secrets.h"
 WiFiClient client;
 HTTPClient http;
+float rrsiLevel = 0;      // variable to store the RRSI level
 
 
 
