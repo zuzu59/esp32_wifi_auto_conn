@@ -2,8 +2,21 @@
 //
 // ATTENTION, ce code a été testé sur un esp32-c3. Pas testé sur les autres boards !
 //
-#define zVERSION  "zf240528.1701"
+#define zVERSION  "zf240528.1850"
 #define zHOST     "wifiauto1"            // ATTENTION, tout en minuscule !
+
+
+
+// il faut encore remplacer les variables et constantes par des directives du compilateur afin de gagner de la place en mémoire
+
+
+
+
+
+
+
+
+
 
 /*
 Utilisation:
@@ -51,7 +64,7 @@ const int ledPin = 8;    // the number of the LED pin
 const int buttonPin = 9;  // the number of the pushbutton pin
 float rrsiLevel = 0;      // variable to store the RRSI level
 
-int zDelay1Interval= 30000;        // Délais en mili secondes pour le zDelay1
+int zDelay1Interval= 60000;        // Délais en mili secondes pour le zDelay1
 
 
 float sensorValue1 = 0;  // variable to store the value coming from the sensor 1
