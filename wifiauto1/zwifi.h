@@ -55,10 +55,99 @@ static void ConnectWiFi() {
 }
 
 
-// start WIFI
-void zStartWifi(){
-    digitalWrite(ledPin, HIGH);
-    USBSerial.println("Connect WIFI !");
-    ConnectWiFi();
-    digitalWrite(ledPin, LOW);
+// // start WIFI
+// void zStartWifi(){
+//     digitalWrite(ledPin, HIGH);
+//     USBSerial.println("Connect WIFI !");
+//     ConnectWiFi();
+//     digitalWrite(ledPin, LOW);
+// }
+
+
+
+
+// #include <WiFi.h>
+#include <vector>
+
+struct WifiCredentials {
+  String ssid;
+  String password;
+};
+
+std::vector<WifiCredentials> wifi_creds;
+
+
+
+void connectToBestWifi() {
+  int best_rssi = -1000;
+  String best_ssid;
+  String best_password;
+
+  // Scanner les réseaux Wi-Fi
+  WiFi.mode(WIFI_STA);
+  WiFi.disconnect();
+  delay(100);
+  int n = WiFi.scanNetworks();
+  USBSerial.print("Number SSID scanned: ");
+  USBSerial.println(n);
+  for (int i = 0; i < n; i++) {
+    USBSerial.print("SSID scanned: ");
+    USBSerial.println(WiFi.SSID(i));
+    USBSerial.print("RSSI: ");
+    USBSerial.println(WiFi.RSSI(i));
+    for (const auto &cred : wifi_creds) {
+
+      if (WiFi.SSID(i) == cred.ssid) {
+        int rssi = WiFi.RSSI(i);
+        if (rssi > best_rssi) {
+          best_rssi = rssi;
+          best_ssid = cred.ssid;
+          best_password = cred.password;
+        }
+      }
+    }
+  }
+
+  // Se connecter au réseau Wi-Fi avec le meilleur RSSI
+  if (!best_ssid.isEmpty()) {
+    WiFi.begin(best_ssid.c_str(), best_password.c_str());
+    USBSerial.print("Connecting to ");
+    USBSerial.println(best_ssid);
+    int connAttempts = 0;
+    while (WiFi.status() != WL_CONNECTED && connAttempts < 10) {
+      delay(500);
+      USBSerial.print(".");
+      connAttempts++;
+    }
+    USBSerial.println("");
+    if (WiFi.status() == WL_CONNECTED) {
+      USBSerial.print("Connected to ");
+      USBSerial.println(best_ssid);
+      USBSerial.print("IP address: ");
+      USBSerial.println(WiFi.localIP());
+    } else {
+      USBSerial.println("Failed to connect");
+    }
+  } else {
+    USBSerial.println("No known networks found");
+  }
 }
+
+void zStartWifi(){
+  // Ajouter vos informations d'identification Wi-Fi au vecteur
+  WifiCredentials creds1 = {WIFI_SSID1, WIFI_PASSWORD1};
+  WifiCredentials creds2 = {WIFI_SSID2, WIFI_PASSWORD2};
+  WifiCredentials creds3 = {WIFI_SSID3, WIFI_PASSWORD3};
+  WifiCredentials creds4 = {WIFI_SSID4, WIFI_PASSWORD4};
+  WifiCredentials creds5 = {WIFI_SSID5, WIFI_PASSWORD5};
+  // Ajoutez autant de réseaux que vous le souhaitez
+  wifi_creds.push_back(creds1);
+  wifi_creds.push_back(creds2);
+  wifi_creds.push_back(creds3);
+  wifi_creds.push_back(creds4);
+  wifi_creds.push_back(creds5);
+  // ...
+  connectToBestWifi();
+}
+
+

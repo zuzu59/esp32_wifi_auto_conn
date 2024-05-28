@@ -55,7 +55,7 @@ const int zSonarPulseOff = 100;    // délai pour sonarPulse
 const int zSonarPulseWait = 500;    // délai pour sonarPulse
 byte zSonarPulseState = 1;    // état pour sonarPulse
 long zSonarPulseNextMillis = 0;    // état pour sonarPulse
-int zDelay1Interval= 3000;        // Délais en mili secondes pour le zDelay1
+int zDelay1Interval= 30000;        // Délais en mili secondes pour le zDelay1
 
 
 float sensorValue1 = 0;  // variable to store the value coming from the sensor 1
@@ -121,7 +121,7 @@ void setup() {
 
 void loop() {
 
-  USBSerial.println("Coucou...\n");
+  USBSerial.println("Coucou...");
 
   // Délais non bloquant pour le sonarpulse et l'OTA
   zDelay1(zDelay1Interval);
