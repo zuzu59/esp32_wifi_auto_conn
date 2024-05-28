@@ -2,7 +2,7 @@
 //
 // ATTENTION, ce code a été testé sur un esp32-c3. Pas testé sur les autres boards !
 //
-#define zVERSION  "zf240528.1036"
+#define zVERSION  "zf240528.1530"
 #define zHOST     "wifiauto1"            // ATTENTION, tout en minuscule !
 
 /*
@@ -50,11 +50,7 @@ https://chat.mistral.ai/    pour toute la partie API REST ᕗ
 const int ledPin = 8;    // the number of the LED pin
 const int buttonPin = 9;  // the number of the pushbutton pin
 float rrsiLevel = 0;      // variable to store the RRSI level
-const int zSonarPulseOn = 50;    // délai pour sonarPulse
-const int zSonarPulseOff = 100;    // délai pour sonarPulse
-const int zSonarPulseWait = 500;    // délai pour sonarPulse
-byte zSonarPulseState = 1;    // état pour sonarPulse
-long zSonarPulseNextMillis = 0;    // état pour sonarPulse
+
 int zDelay1Interval= 30000;        // Délais en mili secondes pour le zDelay1
 
 
@@ -67,11 +63,11 @@ float sensorValue5 = 0;  // variable to store the value coming from the sensor 5
 
 
 // Solar Pulse
-#include "zsolarpulse.h"
+#include "zSonarpulse.h"
 
 
 // WIFI
-#include "zwifi.h"
+#include "zWifi.h"
 
 
 // OTA WEB server
@@ -94,13 +90,7 @@ void setup() {
   delay(3000);                          //le temps de passer sur la Serial Monitor ;-)
   USBSerial.println("\n\n\n\n**************************************\nCa commence !"); USBSerial.println(zHOST ", " zVERSION);
 
-  // // si le bouton FLASH de l'esp32-c3 est appuyé dans les 3 secondes après le boot, la config WIFI sera effacée !
-  // pinMode(buttonPin, INPUT_PULLUP);
-  // if ( digitalRead(buttonPin) == LOW) {
-  //   WiFiManager wm; wm.resetSettings();
-  //   USBSerial.println("Config WIFI effacée !"); delay(1000);
-  //   ESP.restart();
-  // }
+
 
 
   // start WIFI
