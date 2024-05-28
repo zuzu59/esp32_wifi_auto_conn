@@ -1,8 +1,8 @@
-// zf240527.1446
+// zf240527.1701
 
 // Choix de la connexion WIFI, qu'une seule possibilité !
-#define zWifiNormal true
-// #define zWifiManager true
+// #define zWifiNormal true
+#define zWifiManager true
 // #define zWifiAuto true
 
 
@@ -31,6 +31,7 @@ static void ConnectWiFi() {
   WiFi.mode(WIFI_STA);
 
 #ifdef zWifiManager
+  USBSerial.println("Connexion en WIFI Manager");
   // si le bouton FLASH de l'esp32-c3 est appuyé dans les 3 secondes après le boot, la config WIFI sera effacée !
   pinMode(buttonPin, INPUT_PULLUP);
   if ( digitalRead(buttonPin) == LOW) {
@@ -40,7 +41,7 @@ static void ConnectWiFi() {
   }
   WiFiManager wm;
   bool res;
-  res = wm.autoConnect("esp32_wifi_config",""); // password protected ap
+  res = wm.autoConnect("esp32_wifi_config",""); // pas de password pour l'ap esp32_wifi_config
   if(!res) {
       USBSerial.println("Failed to connect");
       // ESP.restart();
@@ -48,7 +49,7 @@ static void ConnectWiFi() {
 #endif
 
 #ifdef zWifiNormal
-  USBSerial.println("Connexion WifiNormal avec secrets.h");
+  USBSerial.println("Connexion en WIFI Normal avec secrets.h");
   USBSerial.printf("WIFI_SSID: %s\nWIFI_PASSWORD: %s\n", WIFI_SSID, WIFI_PASSWORD);
   WiFi.mode(WIFI_STA); //Optional
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
@@ -69,6 +70,7 @@ static void ConnectWiFi() {
       zWifiTiemeout = 1000 + millis();
       delay(200);
       USBSerial.flush(); 
+      // On part en dsleep pour économiser la batterie !
       esp_deep_sleep_start();
     }
   }

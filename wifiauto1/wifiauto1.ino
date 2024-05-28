@@ -2,7 +2,7 @@
 //
 // ATTENTION, ce code a été testé sur un esp32-c3. Pas testé sur les autres boards !
 //
-#define zVERSION  "zf240528.1530"
+#define zVERSION  "zf240528.1701"
 #define zHOST     "wifiauto1"            // ATTENTION, tout en minuscule !
 
 /*
